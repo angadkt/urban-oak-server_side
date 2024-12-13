@@ -21,7 +21,21 @@ const userSchema = new mongoose.Schema({
     role:{
         type:String,
         default:"user"
-    }
+    },
+    cart:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Cart'
+    },
+    wishlist:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Wishlist'
+    },
+    order:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Order'
+        }
+    ]
 
     
 })

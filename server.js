@@ -1,10 +1,13 @@
-import express from 'express'
+import express  from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import dotenv from 'dotenv'
 import userRouter from './src/modules/user/routes/userRouter/UserRouter.js'
+import adminRouter from './src/modules/admin/router/AdminRouter.js'
+import baseRouter from './src/modules/shared/baseRouter.js'
 
 
-
+dotenv.config()
 const app = express()
 
 
@@ -25,6 +28,9 @@ async function main(){
 main()
 
 app.use("/api", userRouter)
+app.use("/api", adminRouter)
+app.use("/api", baseRouter)
+
 
 
 app.listen(4000, ()=>{
