@@ -4,7 +4,7 @@ import UserSchema from "../../models/userSchema/userSchema.js";
 import Products from "../../../admin/models/productSchema/productSchema.js";
 
 export const addToCart = async (req, res) => {
-  try {
+  // try {
     const userId = req.params.userId;
     const { productsId, quantity } = req.body;
 
@@ -60,17 +60,17 @@ export const addToCart = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: `item added to the cart` });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `failed to add to the cart ${err}` });
-  }
+  // } catch (err) {
+  //   return res
+  //     .status(500)
+  //     .json({ success: false, message: `failed to add to the cart ${err}` });
+  // }
 };
 
 // ====================== fetching cart ======================================
 
 export const getCart = async (req, res) => {
-  try {
+  // try {
     const userId = req.params.id;
     console.log(userId);
 
@@ -84,7 +84,6 @@ export const getCart = async (req, res) => {
     const cart = await Cart.findOne({ userId }).populate("products.productsId");
     console.log(cart);
 
-
     if (!cart) {
       return res
         .status(404)
@@ -96,18 +95,18 @@ export const getCart = async (req, res) => {
       message: `cart fetched successfully`,
       data: cart,
     });
-  } catch (err) {
-    console.error(`error occured ${err}`);
-    return res
-      .status(500)
-      .json({ success: false, message: `server not responding ${err}` });
-  }
+  // } catch (err) {
+  //   console.error(`error occured ${err}`);
+  //   return res
+  //     .status(500)
+  //     .json({ success: false, message: `server not responding ${err}` });
+  // }
 };
 
 // =========================================================================
 
 export const removeFromCart = async (req, res) => {
-  try {
+  // try {
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res.status(404).json({ success: false, message: "user invalid" });
@@ -152,17 +151,17 @@ export const removeFromCart = async (req, res) => {
       message: "product removed from cart",
       data: cart,
     });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `server not found ${err}` });
-  }
+  // } catch (err) {
+  //   return res
+  //     .status(500)
+  //     .json({ success: false, message: `server not found ${err}` });
+  // }
 };
 
 // ============================================================
 
 export const increamentQuantity = async (req, res) => {
-  try {
+  // try {
     const userId = req.params.id;
     console.log(userId);
     const { productsId } = req.body;
@@ -209,17 +208,17 @@ export const increamentQuantity = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: `quantity increamented`, data: cart });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `server not responding ${err}` });
-  }
+  // } catch (err) {
+  //   return res
+  //     .status(500)
+  //     .json({ success: false, message: `server not responding ${err}` });
+  // }
 };
 
 // ====================================================================
 
 export const decreamentQuantity = async (req, res) => {
-  try {
+  // try {
     const userId = req.params.id;
     const { productsId } = req.body;
 
@@ -244,24 +243,27 @@ export const decreamentQuantity = async (req, res) => {
         .status(404)
         .json({ success: false, message: `cart not found` });
 
-    const product = await cart.products.find((item) => item.productsId.toString() === productsId);
+    const product = await cart.products.find(
+      (item) => item.productsId.toString() === productsId
+    );
     console.log(product);
-    
-    if (!product){
-        return res
+
+    if (!product) {
+      return res
         .status(404)
         .json({ success: false, message: `product not found` });
-    }else if(product.quantity <= 1){
-        product.quantity = 1
+    } else if (product.quantity <= 1) {
+      product.quantity = 1;
+    } else {
+      product.quantity -= 1;
     }
-    else{
-        product.quantity -= 1
-    }
-    await cart.save()
-      return res.status(200).json({success:true, message:`quantity decreased`, data:cart})
-    
-    
-  } catch (err) {
-    return res.status(500).json({ success: false, message: `server not responding ${err}` });
-  }
+    await cart.save();
+    return res
+      .status(200)
+      .json({ success: true, message: `quantity decreased`, data: cart });
+  // } catch (err) {
+  //   return res
+  //     .status(500)
+  //     .json({ success: false, message: `server not responding ${err}` });
+  // }
 };

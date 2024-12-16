@@ -3,8 +3,9 @@ import Order from "../../models/orderSchema/orderSchema.js";
 import Cart from "../../models/cartSchema/cartSchema.js";
 import UserSchema from "../../models/userSchema/userSchema.js";
 
+
 export const getOrders = async (req, res) => {
-  try {
+  // try {
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res
@@ -22,17 +23,17 @@ export const getOrders = async (req, res) => {
       message: `order fetched successfully`,
       data: order,
     });
-  } catch (err) {
-    return res
-      .status(404)
-      .json({ success: false, message: `server not responding ${err}` });
-  }
+  // } catch (err) {
+  //   return res
+  //     .status(404)
+  //     .json({ success: false, message: `server not responding ${err}` });
+  // }
 };
 
 // ===================================================================================
 
 export const addToOrders = async (req, res) => {
-  try {
+  // try {
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res
@@ -58,7 +59,6 @@ export const addToOrders = async (req, res) => {
 
     const cart = await Cart.findOne({ userId }).populate("products.productsId");
     console.log(cart);
-    console.log(cart)
     
     if (!cart)
       return res
@@ -70,7 +70,7 @@ export const addToOrders = async (req, res) => {
       0
     );
 
-    const newOrder = new Order({
+    const newOrder = new Orders({
       userId: userId,
       products: cart.products.map((item) => ({
         productsId: item.productsId,
@@ -89,9 +89,9 @@ export const addToOrders = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: `order successfull`, data: newOrder });
-  } catch (err) {
-    return res
-      .status(200)
-      .json({ success: false, message: `server not responding ${err}` });
-  }
+  // } catch (err) {
+  //   return res
+  //     .status(200)
+  //     .json({ success: false, message: `server not responding ${err}` });
+  // }
 };

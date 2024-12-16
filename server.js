@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import userRouter from './src/modules/user/routes/userRouter/UserRouter.js'
 import adminRouter from './src/modules/admin/router/AdminRouter.js'
 import baseRouter from './src/modules/shared/baseRouter.js'
+import { erroHandler } from './src/modules/user/middlewares/AuthMiddleware.js'
 
 
 dotenv.config()
@@ -13,8 +14,9 @@ const app = express()
 
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json()) //middleware is used to accept the json data
 app.use(express.urlencoded({extended:true}))
+// app.use(erroHandler)
 
 async function main(){
     try{
