@@ -2,29 +2,31 @@ import express from 'express'
 import { addProducts, deleteProduct, editProduct } from '../controllers/productControlls/productController.js'
 import { blockAndUnblockUser, getAllUsers, getUsersById, removeUser } from '../controllers/adminUserList/adminUserController.js'
 import { handleTotalRevenue, handleTotalUsers, totalProductsPurchased } from '../controllers/adminDashboard/adminDashboard.js'
+import { isAuthenticate } from '../../user/middlewares/AuthMiddleware.js'
+import { tryCatch } from '../../utils/tryCatch.js'
 
 
 const router = express.Router()
 
-router.post("/addproducts", addProducts)
+router.post("/addproducts", tryCatch(addProducts))
 
-router.put("/editproduct/:id", editProduct)
+router.put("/editproduct/:id", tryCatch(editProduct))
 
-router.delete("/deleteproduct/:id", deleteProduct)
+router.delete("/deleteproduct/:id", tryCatch(deleteProduct))
 
-router.get("/getusers", getAllUsers)
+router.get("/getusers", tryCatch(getAllUsers))
 
-router.get("/getusersbyid/:id", getUsersById)
+router.get("/getusersbyid/:id", tryCatch(getUsersById))
 
-router.delete("/deleteuser/:id", removeUser)
+router.delete("/deleteuser/:id", tryCatch(removeUser))
 
-router.put("/blockandunblock/:id", blockAndUnblockUser)
+router.put("/blockandunblock/:id", tryCatch(blockAndUnblockUser))
 
 //dash board
-router.get("/totalproductspurchased", totalProductsPurchased)
+router.get("/totalproductspurchased", tryCatch(totalProductsPurchased))
 
-router.get("/gettotalrevenue", handleTotalRevenue)
+router.get("/gettotalrevenue", tryCatch(handleTotalRevenue))
 
-router.get("/getuserscount" ,handleTotalUsers)
+router.get("/getuserscount" ,tryCatch(handleTotalUsers))
 
 export default router

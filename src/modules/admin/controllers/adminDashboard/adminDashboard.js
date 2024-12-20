@@ -2,7 +2,6 @@ import Order from "../../../user/models/orderSchema/orderSchema.js";
 import UserSchema from "../../../user/models/userSchema/userSchema.js";
 
 export const totalProductsPurchased = async (req, res) => {
-  try {
     const orders = await Order.find();
     if (!orders)
       return res
@@ -19,17 +18,11 @@ export const totalProductsPurchased = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: `data calculated`, data: totalProducts });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `error occured ${err}` });
-  }
 };
 
 // ==================================================================================
 
 export const handleTotalRevenue = async (req, res) => {
-  try {
     const result = await Order.aggregate([
       { $group: { _id: null, totalRevenue: { $sum: "$Total_Amount" } } },
     ]);
@@ -43,17 +36,11 @@ export const handleTotalRevenue = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: "calculation successful", data: result });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: true, message: `server not responding ${err}` });
-  }
 };
 
 // ======================================================================================
 
 export const handleTotalUsers = async (req, res) => {
-  try {
     const totalUsers = await UserSchema.aggregate([{ $count: "totalCount" }]);
     if (!totalUsers)
       return res
@@ -63,12 +50,8 @@ export const handleTotalUsers = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: "data fetched", data: totalUsers });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `server not responding ${err}` });
-  }
 };
+// ===============================================================
 
 // export const handleAdminLogin = async (req, res) => {
 //   try {

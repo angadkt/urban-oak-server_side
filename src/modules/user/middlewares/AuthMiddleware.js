@@ -31,7 +31,6 @@ import registerValidation from "./joi-validation/registerValidation.js";
 
 export const isAuthenticate = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  console.log("Authorization Header:", authHeader); 
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({
@@ -40,8 +39,8 @@ export const isAuthenticate = async (req, res, next) => {
     });
   }
 
-  const token = authHeader.split(" ")[1] || authHeader.substring(7).trim(); 
-  console.log("Extracted Token:", token); 
+  const token = authHeader.split(" ")[1] || authHeader.substring(7).trim();
+  console.log("Extracted Token:", token);
 
   if (!token) {
     return res.status(401).json({
@@ -54,7 +53,7 @@ export const isAuthenticate = async (req, res, next) => {
     const validateToken = jwt.verify(token, process.env.TOKEN_SECRET, {
       algorithms: ["HS256"],
     });
-    req.user = validateToken; 
+    req.user = validateToken;
     next();
   } catch (err) {
     return res.status(401).json({
@@ -67,8 +66,7 @@ export const isAuthenticate = async (req, res, next) => {
 export const registerValidationMiddleware = (req, res, next) => {
   const { error, value } = registerValidation.validate(req.body);
   if (error) {
-    console.log(error);
-    
+
     return res
       .status(202)
       .json({ success: false, message: `content not valid` });
@@ -78,5 +76,7 @@ export const registerValidationMiddleware = (req, res, next) => {
 };
 
 export const erroHandler = (error, req, res, next) => {
-  return res.status(500).json({success:false, message:`server side error ${error}`})
+  return res
+    .status(500)
+    .json({ success: false, message: `server side error ${error}` });
 };

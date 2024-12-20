@@ -26,7 +26,7 @@ router.patch('/decreament/:id',tryCatch(decreamentQuantity))
 
 router.get('/getorders/:id' , isAuthenticate,tryCatch(getOrders))
 
-router.post('/addorders/:id', isAuthenticate,tryCatch(addToOrders))
+router.post('/addorders/:id', tryCatch(addToOrders))
 
 router.post('/addtowishlist/:id', isAuthenticate,tryCatch(addToWishList))
 

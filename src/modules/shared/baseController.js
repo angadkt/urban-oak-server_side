@@ -1,4 +1,3 @@
-// import { Mongoose } from "mongoose";
 import mongoose from "mongoose";
 import Products from "../admin/models/productSchema/productSchema.js";
 
@@ -78,3 +77,4 @@ export const getProductByCategory = async (req, res) => {
 };
 
 // ============================================================================
+

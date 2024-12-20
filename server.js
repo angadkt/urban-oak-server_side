@@ -13,10 +13,8 @@ const app = express()
 
 
 
-app.use(cors())
 app.use(express.json()) //middleware is used to accept the json data
 app.use(express.urlencoded({extended:true}))
-// app.use(erroHandler)
 
 async function main(){
     try{

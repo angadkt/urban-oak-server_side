@@ -4,7 +4,6 @@ import { comparePassword, hashPassword } from "../../../utils/bycript.js";
 import { generateToken } from "../../../utils/jwt.js";
 
 export const userRegister = async (req, res) => {
-  // try {
   const { name, email, password } = req.body;
 
   const existUser = await UserSchema.findOne({ email });
@@ -13,10 +12,7 @@ export const userRegister = async (req, res) => {
       .status(400)
       .json({ success: false, message: `user already exist` });
   }
-  // if (password != confirmPassword)
-  //   return res
-  //     .status(400)
-  //     .json({ success: false, message: `password doesnt match` });
+
   const hashedPassword = await hashPassword(password);
   const newUser = new UserSchema({
     name,
@@ -25,19 +21,14 @@ export const userRegister = async (req, res) => {
   });
   await newUser.save();
 
-  res
+  return res
     .status(201)
     .json({ message: "User registered successfully", data: newUser });
-  // } catch (err) {
-  //   res
-  //     .status(500)
-  //     .json({ message: "Error retrieving users", error: err.message });
-  // }
+
 };
 //==========================================================================
 
 export const loginHandler = async (req, res) => {
-  // try {
   const { email, password } = req.body;
   const existUser = await UserSchema.findOne({ email });
 
@@ -77,9 +68,13 @@ export const loginHandler = async (req, res) => {
     data: existUser,
     token,
   });
-  // } catch (err) {
-  //   res
-  //     .status(500)
-  //     .json({ message: `error checking user, error: ${err.message}` });
-  // }
+
 };
+
+
+
+// =========================================================================
+
+export const handleLogout = async (req, res) => {
+
+}

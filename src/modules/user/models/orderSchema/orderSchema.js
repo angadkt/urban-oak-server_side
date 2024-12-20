@@ -10,7 +10,7 @@ const orderSchema = mongoose.Schema(
     products: [
       {
         productsId: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId  ,
           ref: "Products",
           required: true,
         },
@@ -38,8 +38,10 @@ const orderSchema = mongoose.Schema(
       // required: true,
     },
     Address: {
-      type: String,
-      required: true
+      house_name: { type: String, required: true },
+      city: { type: String, required: true },
+      state: { type: String, required: true },
+      pin_code: { type: Number, required: true },
     },
     State: {
       type: String,

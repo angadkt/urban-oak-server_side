@@ -70,7 +70,7 @@ export const addToOrders = async (req, res) => {
       0
     );
 
-    const newOrder = new Orders({
+    const newOrder = new Order({
       userId: userId,
       products: cart.products.map((item) => ({
         productsId: item.productsId,
