@@ -5,7 +5,6 @@ import dotenv from 'dotenv'
 import userRouter from './src/modules/user/routes/userRouter/UserRouter.js'
 import adminRouter from './src/modules/admin/router/AdminRouter.js'
 import baseRouter from './src/modules/shared/baseRouter.js'
-import { erroHandler } from './src/modules/user/middlewares/AuthMiddleware.js'
 
 
 dotenv.config()

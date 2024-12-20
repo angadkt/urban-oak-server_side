@@ -1,5 +1,5 @@
 
-export const tryCatch = (controller)=> async (req,res ,next) => {
+export const tryCatch = (controller)=> async (req,res ) => {
     try {
         await controller(req,res)
     }

@@ -75,6 +75,3 @@ export const loginHandler = async (req, res) => {
 
 // =========================================================================
 
-export const handleLogout = async (req, res) => {
-
-}
