@@ -53,25 +53,4 @@ export const handleTotalUsers = async (req, res) => {
 };
 // ===============================================================
 
-// export const handleAdminLogin = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
 
-//     if (
-//       email == process.env.ADMIN_EMAIL &&
-//       password == process.env.ADMIN_PASSWORD
-//     ) {
-//       return res
-//         .status(200)
-//         .json({ success: true, message: `admin login successful` });
-//     }
-
-//     return res
-//       .status(404)
-//       .json({ success: false, message: `credentials doesnt match` });
-//   } catch (err) {
-//     return res
-//       .status(500)
-//       .status({ success: false, message: `server not found  ${err}` });
-//   }
-// };

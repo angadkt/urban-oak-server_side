@@ -54,7 +54,7 @@ export const getProductsById = async (req, res) => {
 
 export const getProductByCategory = async (req, res) => {
   try {
-    const { category } = req.body;
+    const { category } = req.query;
     if (!category)
       return res
         .status(404)
@@ -78,3 +78,15 @@ export const getProductByCategory = async (req, res) => {
 
 // ============================================================================
 
+export const getProductsBySearch = async (req,res) => {
+  const {query} = req.query
+
+  if(!query || query.trim() == ""){
+    return res.status(404).json({success:false, message:`query not found`})
+  }
+
+  const searchRegExp = new RegExp(query, 'i');
+
+  const searchProducts = await Products.find()
+
+}

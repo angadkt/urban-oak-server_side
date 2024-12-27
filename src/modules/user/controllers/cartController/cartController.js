@@ -4,7 +4,6 @@ import UserSchema from "../../models/userSchema/userSchema.js";
 import Products from "../../../admin/models/productSchema/productSchema.js";
 
 export const addToCart = async (req, res) => {
-  // try {
     const userId = req.params.userId;
     const { productsId, quantity } = req.body;
 
@@ -59,12 +58,7 @@ export const addToCart = async (req, res) => {
 
     return res
       .status(200)
-      .json({ success: true, message: `item added to the cart` });
-  // } catch (err) {
-  //   return res
-  //     .status(500)
-  //     .json({ success: false, message: `failed to add to the cart ${err}` });
-  // }
+      .json({ success: true, message: `item added to the cart` ,data:specificProduct});
 };
 
 // ====================== fetching cart ======================================
@@ -106,7 +100,6 @@ export const getCart = async (req, res) => {
 // =========================================================================
 
 export const removeFromCart = async (req, res) => {
-  // try {
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res.status(404).json({ success: false, message: "user invalid" });
@@ -151,11 +144,6 @@ export const removeFromCart = async (req, res) => {
       message: "product removed from cart",
       data: cart,
     });
-  // } catch (err) {
-  //   return res
-  //     .status(500)
-  //     .json({ success: false, message: `server not found ${err}` });
-  // }
 };
 
 // ============================================================
