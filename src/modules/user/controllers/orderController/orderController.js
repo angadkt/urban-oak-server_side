@@ -5,7 +5,6 @@ import UserSchema from "../../models/userSchema/userSchema.js";
 
 
 export const getOrders = async (req, res) => {
-  // try {
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res
@@ -23,17 +22,11 @@ export const getOrders = async (req, res) => {
       message: `order fetched successfully`,
       data: order,
     });
-  // } catch (err) {
-  //   return res
-  //     .status(404)
-  //     .json({ success: false, message: `server not responding ${err}` });
-  // }
 };
 
 // ===================================================================================
 
 export const addToOrders = async (req, res) => {
-  // try {
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res
@@ -44,10 +37,7 @@ export const addToOrders = async (req, res) => {
     const {Address} = req.body
     console.log(Address);
     
-    // if (!mongoose.Types.ObjectId.isValid(productsId))
-    //   return res
-    //     .status(404)
-    //     .json({ success: false, message: `product is not valid` });
+   
 
 
     const user = await UserSchema.findById(userId);
@@ -89,9 +79,4 @@ export const addToOrders = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: `order successfull`, data: newOrder });
-  // } catch (err) {
-  //   return res
-  //     .status(200)
-  //     .json({ success: false, message: `server not responding ${err}` });
-  // }
 };

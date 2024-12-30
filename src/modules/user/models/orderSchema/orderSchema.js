@@ -21,6 +21,10 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
+    payment_status: {
+      type: String,
+      status: ["pending", "fullfilled", "error"],
+    },
     Total_Amount: {
       type: Number,
       required: true,

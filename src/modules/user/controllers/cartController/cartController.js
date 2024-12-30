@@ -153,7 +153,7 @@ export const increamentQuantity = async (req, res) => {
     const userId = req.params.id;
     console.log(userId);
     const { productsId } = req.body;
-    console.log("products id", productsId);
+    // console.log("products id", productsId);
 
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res
@@ -166,7 +166,7 @@ export const increamentQuantity = async (req, res) => {
         .json({ success: false, message: `product not valid` });
 
     const user = await UserSchema.findById(userId);
-    console.log(user);
+    // console.log(user);
 
     if (!user)
       return res
@@ -184,6 +184,8 @@ export const increamentQuantity = async (req, res) => {
     const currentProduct = await cart.products.find(
       (item) => item.productsId.toString() === productsId
     );
+
+    console.log("current product", currentProduct.productsId)
 
     if (!currentProduct) {
       return res
@@ -206,7 +208,6 @@ export const increamentQuantity = async (req, res) => {
 // ====================================================================
 
 export const decreamentQuantity = async (req, res) => {
-  // try {
     const userId = req.params.id;
     const { productsId } = req.body;
 
@@ -249,9 +250,5 @@ export const decreamentQuantity = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: `quantity decreased`, data: cart });
-  // } catch (err) {
-  //   return res
-  //     .status(500)
-  //     .json({ success: false, message: `server not responding ${err}` });
-  // }
+ 
 };

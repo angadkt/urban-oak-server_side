@@ -6,6 +6,10 @@ import mongoose from "mongoose";
 export const addProducts = async (req, res) => {
   const { name, category, details, images, price, quantity } = req.body;
 
+  if(!images || !Array.isArray(images) || images.length === 0){
+    return res.status(400).json({succcess:false, message:"images are requires"})
+  }
+
   const productExist = await Products.findOne({ name });
 
   if (productExist)
@@ -61,32 +65,26 @@ export const editProduct = async (req, res) => {
 // ================================================
 
 export const deleteProduct = async (req, res) => {
-  const id = req.params.id;
-  const deleteProduct = await Products.findByIdAndDelete(id);
-  if (!deleteProduct) {
+  const { productsId } = req.body;
+
+  if (!productsId || !mongoose.Types.ObjectId.isValid(productsId)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid or missing productsId" });
+  }
+
+  const deletedProduct = await Products.findByIdAndDelete(productsId);
+
+  if (!deletedProduct) {
     return res
       .status(404)
-      .json({ success: false, message: "cant delete product" });
+      .json({ success: false, message: "Product not found" });
   }
-  return res
+
+  res
     .status(200)
-    .json({ success: true, message: "product deleted", data: deleteProduct });
+    .json({ success: true, message: "Product deleted", data: deletedProduct });
 };
 
 // =======================================
 
-// export const editProduct = async (req, res) => {
-//   const productId = req.params.id;
-//   if (!mongoose.Types.ObjectId.isValid(editProduct))
-//     return res.status(404).json({ success: false, message: `invalid product` });
-
-//   const { name, category, details, images, price, quantity } = req.body;
-
-
-
-//     const editedProduct = await Products.findByIdAndUpdate(productId, {$set :{name, category, details, images, price, quantity}},
-//         {new: true}
-//     )
-
-//     if(!editedProduct) return res.status(404).json({success:false, message:`product not found`})
-// };
