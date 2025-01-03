@@ -25,27 +25,21 @@ const orderSchema = mongoose.Schema(
       type: String,
       status: ["pending", "fullfilled", "error"],
     },
+    paymentMethod:{
+      type:String,
+
+    },
     Total_Amount: {
       type: Number,
       required: true,
-    },
-    Payment_Id: {
-      type: String,
-      // required: true,
-    },
-    Order_Id: {
-      type: String,
-      // required: true,
     },
     Customer_Name: {
       type: String,
       // required: true,
     },
     Address: {
-      house_name: { type: String, required: true },
-      city: { type: String, required: true },
-      state: { type: String, required: true },
-      pin_code: { type: Number, required: true },
+      type:String,
+      // required:true
     },
     State: {
       type: String,

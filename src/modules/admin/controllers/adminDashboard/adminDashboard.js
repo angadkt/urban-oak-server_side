@@ -9,7 +9,6 @@ export const totalProductsPurchased = async (req, res) => {
         .json({ success: false, message: `orders not found` });
 
     const productsPurchased = orders.map((item) => item.products).flat();
-    console.log(productsPurchased);
     const totalProducts = productsPurchased.length;
     if (!totalProducts)
       return res
@@ -46,7 +45,6 @@ export const handleTotalUsers = async (req, res) => {
       return res
         .status(404)
         .json({ success: false, message: `error on calculation` });
-    console.log(totalUsers);
     return res
       .status(200)
       .json({ success: true, message: "data fetched", data: totalUsers });
@@ -54,3 +52,9 @@ export const handleTotalUsers = async (req, res) => {
 // ===============================================================
 
 
+export const handleTotalOrders = async (req, res) => {
+  const totalOrders = await Order.find()
+  if(!totalOrders) return res.status(400).json({success:false, message:`orders not found`})
+
+  return res.status(200).json({success:true, message:`orders fetched successfully`, data:totalOrders})
+}

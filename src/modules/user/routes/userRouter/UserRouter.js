@@ -5,6 +5,7 @@ import { addToOrders, getOrders } from '../../controllers/orderController/orderC
 import { addToWishList, getWishlist, removeWishlsit } from '../../controllers/wishlistController/wishlistController.js'
 import { isAuthenticate, registerValidationMiddleware } from '../../middlewares/AuthMiddleware.js'
 import { tryCatch } from '../../../utils/tryCatch.js'
+import { createOrder ,paymentVarification} from '../../controllers/paymentContoller/PaymentController.js'
 
 
 
@@ -33,5 +34,8 @@ router.post('/addtowishlist/:id', isAuthenticate,tryCatch(addToWishList))
 router.get('/getwishlist/:id', isAuthenticate,tryCatch(getWishlist))
 
 router.delete('/deletewishlistitem/:id', isAuthenticate,tryCatch(removeWishlsit))
+
+router.post('/payment/:id', createOrder)
+router.post('/paymentverification/:id', tryCatch(paymentVarification))
 
 export default router

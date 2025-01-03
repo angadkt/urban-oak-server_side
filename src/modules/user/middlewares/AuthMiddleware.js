@@ -4,6 +4,8 @@ import registerValidation from "./joi-validation/registerValidation.js";
 
 
 export const isAuthenticate = async (req, res, next) => {
+  console.log("checking");
+  
   const authHeader = req.headers["authorization"];
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -24,8 +26,14 @@ export const isAuthenticate = async (req, res, next) => {
   }
 
   try {
+    console.log("hi there");
+    
     const validateToken = jwt.verify(token, process.env.TOKEN_SECRET);
+    console.log("validate token", validateToken);
+    if(!validateToken) return res.status(404).json({success:false, message:"not found"})
     req.user = validateToken;
+    console.log("req user",req.user);
+    
     next();
   } catch (err) {
     return res.status(401).json({
