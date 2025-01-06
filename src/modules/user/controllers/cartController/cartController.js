@@ -5,9 +5,9 @@ import Products from "../../../admin/models/productSchema/productSchema.js";
 
 export const addToCart = async (req, res) => {
     const userId = req.params.userId;
-    console.log("user id", userId)
     const { productsId, quantity } = req.body;
 
+    console.log("checking user id valid or not",userId)
     // ===================================================
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res
@@ -15,7 +15,6 @@ export const addToCart = async (req, res) => {
         .json({ success: false, message: "user is invalid" });
 
     const specificUser = await UserSchema.findById(userId);
-    console.log("user", specificUser)
     if (!specificUser)
       return res
         .status(404)
@@ -78,7 +77,6 @@ export const getCart = async (req, res) => {
     // ............................................
 
     const cart = await Cart.findOne({ userId }).populate("products.productsId");
-    console.log(cart);
 
     if (!cart) {
       return res
@@ -119,7 +117,6 @@ export const removeFromCart = async (req, res) => {
         .json({ success: false, message: "user not found" });
 
     const cart = await Cart.findOne({ userId });
-    console.log("first cart", cart);
     if (!cart)
       return res
         .status(404)
@@ -129,8 +126,7 @@ export const removeFromCart = async (req, res) => {
     const indexOfElement = cart.products.findIndex(
       (item) => item.productsId.toString() === productsId
     );
-    // console.log("products mapp", cart.products);
-    // console.log(indexOfElement);
+   
     if (indexOfElement === -1)
       return res
         .status(404)
@@ -153,9 +149,7 @@ export const removeFromCart = async (req, res) => {
 export const increamentQuantity = async (req, res) => {
   // try {
     const userId = req.params.id;
-    console.log(userId);
     const { productsId } = req.body;
-    // console.log("products id", productsId);
 
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res
@@ -176,7 +170,6 @@ export const increamentQuantity = async (req, res) => {
         .json({ success: false, message: `user not found` });
 
     const cart = await Cart.findOne({ userId });
-    console.log(cart);
 
     if (!cart)
       return res
