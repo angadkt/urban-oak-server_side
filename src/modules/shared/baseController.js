@@ -4,7 +4,6 @@ import Products from "../admin/models/productSchema/productSchema.js";
 // ========================================================
 
 export const getProducts = async (req, res) => {
-  try {
     const products = await Products.find();
     if (!products) {
       return res
@@ -16,16 +15,11 @@ export const getProducts = async (req, res) => {
       message: "data accuired successfuly",
       data: products,
     });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `Bad request ${err.message}` });
-  }
+ 
 };
 
 // ================================================================
 export const getProductsById = async (req, res) => {
-  try {
     const id = req.params.id;
     const existProduct = await Products.findById(id);
     // console.log(existProduct)
@@ -39,17 +33,12 @@ export const getProductsById = async (req, res) => {
       message: "product fetching success",
       data: existProduct,
     });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `Bad request ${err.message}` });
-  }
+  
 };
 
 // =================================================================================
 
 export const getProductByCategory = async (req, res) => {
-  try {
     const { category } = req.query;
     if (!category)
       return res
@@ -69,11 +58,7 @@ export const getProductByCategory = async (req, res) => {
         message: `product fetched successfully`,
         data: product,
       });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ success: false, message: `server not responding ${err}` });
-  }
+ 
 };
 
 // ============================================================================
@@ -89,9 +74,9 @@ export const getProductsBySearch = async (req, res) => {
 
   const searchProducts = await Products.find({
     $or: [
-      { name: { regex: searchRegExp } },
-      { desciption: { regex: searchRegExp } },
-      { category: { regex: searchRegExp } },
+      { name: { $regex: searchRegExp } },
+      { desciption: { $regex: searchRegExp } },
+      { category: { $regex: searchRegExp } },
     ],
   });
 

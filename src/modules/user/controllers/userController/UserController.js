@@ -10,7 +10,7 @@ export const userRegister = async (req, res) => {
   if (existUser) {
     return res
       .status(400)
-      .json({ success: false, message: `user already exist` });
+      .json({ success: false, message: `email already exist` });
   }
 
   const hashedPassword = await hashPassword(password);
@@ -24,7 +24,6 @@ export const userRegister = async (req, res) => {
   return res
     .status(201)
     .json({ message: "User registered successfully", data: newUser });
-
 };
 //==========================================================================
 
@@ -52,14 +51,18 @@ export const loginHandler = async (req, res) => {
   console.log(token);
 
   if (existUser.role === "admin") {
+    return res.status(200).json({
+      success: true,
+      message: `admin loginned successfully`,
+      data: existUser,
+      token,
+    });
+  }
+
+  if (existUser.isBlocked === true) {
     return res
-      .status(200)
-      .json({
-        success: true,
-        message: `admin loginned successfully`,
-        data: existUser,
-        token,
-      });
+      .status(400)
+      .json({ success: false, message: `user is blocked , contact admin` });
   }
 
   return res.status(200).json({
@@ -68,10 +71,6 @@ export const loginHandler = async (req, res) => {
     data: existUser,
     token,
   });
-
 };
 
-
-
 // =========================================================================
-
