@@ -26,6 +26,10 @@ async function main(){
     }
 }
 main()
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the API!' });
+  });
+  
 
 app.use("/api", userRouter)
 app.use("/api", adminRouter)
