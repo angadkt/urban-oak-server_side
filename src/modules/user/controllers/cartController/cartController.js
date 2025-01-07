@@ -4,6 +4,7 @@ import UserSchema from "../../models/userSchema/userSchema.js";
 import Products from "../../../admin/models/productSchema/productSchema.js";
 
 export const addToCart = async (req, res) => {
+  
     const userId = req.params.userId;
     const { productsId, quantity } = req.body;
 
@@ -100,6 +101,8 @@ export const getCart = async (req, res) => {
 // =========================================================================
 
 export const removeFromCart = async (req, res) => {
+  // console.log(typeof process.env.KEY_ID, process.env.KEY_ID)
+  // console.log(typeof process.env.KEY_SECRET ,process.env.KEY_SECRET)
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId))
       return res.status(404).json({ success: false, message: "user invalid" });

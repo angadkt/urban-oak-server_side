@@ -4,7 +4,6 @@ import registerValidation from "./joi-validation/registerValidation.js";
 
 
 export const isAuthenticate = async (req, res, next) => {
-  console.log("is auth middleware console");
   const authHeader = req.headers["authorization"];
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({
@@ -12,9 +11,7 @@ export const isAuthenticate = async (req, res, next) => {
       message: "Access denied. Token not provided or invalid format.",
     });
   }
-  console.log("authheader chech",authHeader)
   const token = authHeader.split(" ")[1] || authHeader.substring(7).trim();
-  console.log("Extracted Token:", token);
   if (!token) {
     return res.status(401).json({
       success: false,
@@ -23,13 +20,10 @@ export const isAuthenticate = async (req, res, next) => {
   }
   try {
     const validateToken = jwt.verify(token, process.env.TOKEN_SECRET);
-    console.log("validate token", validateToken);
     if(!validateToken) return res.status(404).json({success:false, message:"not found"})
     req.user = validateToken;
-    console.log("req user",req.user);
     next();
   } catch (err) {
-    console.log("token issue catched")
     return res.status(401).json({
       success: false,
       message: `Token verification failed: ${err.message}`,

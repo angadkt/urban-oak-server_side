@@ -5,8 +5,8 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const razorpay = new Razorpay({
-    key_id: process.env.KEY_ID,
-    key_secret: process.env.KEY_SECRET
+    key_id: "rzp_test_KVYa3j27SRKqtq",
+    key_secret: "zZvoDKD9cMaBSTKMO8kFa0jo",
 })
 
 
